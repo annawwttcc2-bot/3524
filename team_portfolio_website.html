@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Team | Portfolio & Profiles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #f43f5e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      background-color: var(--card-bg);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+
+    .search-box input {
+      background-color: var(--bg-color);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      outline: none;
+      width: 260px;
+      font-size: 0.95rem;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background-color: var(--bg-color);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background-color: var(--primary);
+      color: #0f172a;
+      font-weight: 600;
+      border-color: var(--primary);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-img-wrapper {
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background-color: #0f172a;
+    }
+
+    .card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-name {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-role {
+      color: var(--primary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-bio {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag {
+      background-color: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .card-btn {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .card-btn:hover {
+      background-color: var(--primary);
+      color: #0f172a;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      max-width: 650px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      padding: 2rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-header {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .modal-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-section h4 {
+      color: var(--primary);
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.25rem;
+    }
+
+    .modal-section p, .modal-section ul {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .modal-section ul {
+      list-style-type: disc;
+      padding-left: 1.2rem;
+    }
+
+    .contact-info a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Meet Our Team</h1>
+      <p>Passionate specialists driven by business, finance, sports, art, and innovation.</p>
+    </header>
+
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search team member or skill..." onkeyup="filterTeam()">
+      </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" onclick="setCategory('all', this)">All</button>
+        <button class="filter-btn" onclick="setCategory('finance', this)">Finance & Strategy</button>
+        <button class="filter-btn" onclick="setCategory('marketing', this)">Marketing & PR</button>
+        <button class="filter-btn" onclick="setCategory('tech', this)">Engineering & Bio</button>
+        <button class="filter-btn" onclick="setCategory('sports', this)">Athletics</button>
+      </div>
+    </div>
+
+    <div class="team-grid" id="teamGrid">
+      <!-- Member cards rendered by JS -->
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const team = [
+      {
+        id: "chris",
+        name: "Chris (Jangbae) Park",
+        role: "Global Business & Equity Analyst",
+        category: "finance",
+        photo: "images/Chris Park.jpg",
+        bio: "HKU IBGM scholar with equity research experience across major investment management firms.",
+        tags: ["Equities", "Strategy", "Investment", "HKU IBGM"],
+        education: "BBA in Global Business (IBGM) & Philosophy, The University of Hong Kong (GPA: 3.8/4.0)",
+        experience: [
+          "Balyasny Asset Management — Associate, Long/Short Equities",
+          "Boston Consulting Group (BCG) — Research Analyst Intern",
+          "Polymer Capital Management — Investment Intern",
+          "Anatole Investment Management — Investment Research Intern"
+        ],
+        skills: ["CapitalIQ", "Bloomberg Terminal", "Financial Modeling", "English (Native)", "Korean", "Mandarin"],
+        contact: "prk.jangbae@gmail.com"
+      },
+      {
+        id: "anna",
+        name: "Anna (Chan Tsz Wing)",
+        role: "Biomedical Engineer & Marketer",
+        category: "tech",
+        photo: "images/Anna Chan.jpg",
+        bio: "Bridging healthcare technology and strategic market communication through cross-disciplinary expertise.",
+        tags: ["Biomedical", "Healthcare", "Marketing", "Event Logistics"],
+        education: "B.Eng in Biomedical Engineering & BBA in Marketing, HKU",
+        experience: [
+          "Hong Kong Adventist Hospital — Biomedical Engineering Intern",
+          "Hong Kong Council on Smoking and Health — Quit to Win Ambassador",
+          "Youth Literary Awards Association — Welfare & Admin Secretary",
+          "The 15th National Games — Media Operation Assistant"
+        ],
+        skills: ["Medical Equipment Testing", "Event Logistics", "Public Outreach", "Cantonese (Native)", "English", "Mandarin"],
+        contact: "actnawnaa@gmail.com"
+      },
+      {
+        id: "herman",
+        name: "Herman Yeung",
+        role: "Professional Footballer & Marketer",
+        category: "sports",
+        photo: "images/Herman Yeung.jpg",
+        bio: "Professional athlete competing at the top flight in HK while mastering marketing and event leadership.",
+        tags: ["Premier League", "Marketing", "Leadership", "HK National Team"],
+        education: "BBA in Marketing, The University of Hong Kong (Wing Lee Entrance Scholarship)",
+        experience: [
+          "Hong Kong Football Club & Tai Po FC — Professional Footballer",
+          "Hong Kong National Representative Squad — Athlete",
+          "Asia Pacific Soccer Schools — Football Coach",
+          "Kwong & Lee, Solicitors — Accountant"
+        ],
+        skills: ["Team Leadership", "Event Coordination", "Accounting Data Entry", "Professional Sports"],
+        contact: "hermanmyeung@gmail.com"
+      },
+      {
+        id: "ari",
+        name: "Ari Tang",
+        role: "Brand Communications & Gallery Specialist",
+        category: "marketing",
+        photo: "images/Ari Tang.jpg",
+        bio: "Specialist in luxury branding, contemporary art marketing, and high-end hospitality communications.",
+        tags: ["Luxury PR", "Art History", "Social Media", "Four Seasons"],
+        education: "BBA in Marketing & Minor in Art History, HKU | Le Cordon Bleu Paris (Basic Pastry)",
+        experience: [
+          "Four Seasons Hotel Hong Kong — PR & Marketing Communications Intern",
+          "OPERA Gallery Hong Kong — Gallery Intern",
+          "Contemporary by Angela Li — Gallery Intern",
+          "Sooner Safer Happier Consulting (London) — Marketing Intern"
+        ],
+        skills: ["Adobe Illustrator & Photoshop", "Luxury PR", "WeChat / RED Marketing", "Cantonese (Native)", "English (Native)"],
+        contact: "ariri.tang@gmail.com"
+      },
+      {
+        id: "nina",
+        name: "Nina (Shan Yiyi)",
+        role: "Financial Analyst & Creative Strategist",
+        category: "finance",
+        photo: "images/Nina Shan.jpg",
+        bio: "Economics & Finance student experienced in equity research, market analysis, and digital content creation.",
+        tags: ["Economics", "Securities Research", "Data Analytics", "Content Creator"],
+        education: "Bachelor of Economics & Finance, HKU | Exchange at Peking University",
+        experience: [
+          "Minsheng Securities — Research Department Intern",
+          "Braverman Public Accountant — Consulting Department Intern",
+          "NetEase Cloud Music — Exclusive Musician (900k+ total likes on Douyin)",
+          "China Pacific Life Insurance — Administrative Intern"
+        ],
+        skills: ["MS Office & Excel", "SPSS", "Equity Research", "Chinese (Native)", "English", "Cantonese"],
+        contact: "shanyiyi0520@163.com"
+      }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderTeam() {
+      const grid = document.getElementById('teamGrid');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      
+      grid.innerHTML = '';
+
+      const filtered = team.filter(member => {
+        const matchesCategory = currentCategory === 'all' || member.category === currentCategory;
+        const matchesSearch = member.name.toLowerCase().includes(search) || 
+                              member.role.toLowerCase().includes(search) ||
+                              member.tags.some(t => t.toLowerCase().includes(search));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">No team members found.</p>';
+        return;
+      }
+
+      filtered.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-img-wrapper">
+            <img src="${m.photo}" alt="${m.name}" onerror="this.src='https://via.placeholder.com/300x280?text=Photo+Unavailable'">
+          </div>
+          <div class="card-content">
+            <h3 class="card-name">${m.name}</h3>
+            <div class="card-role">${m.role}</div>
+            <p class="card-bio">${m.bio}</p>
+            <div class="tags">
+              ${m.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+            </div>
+            <button class="card-btn" onclick="openModal('${m.id}')">View Full Profile</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTeam();
+    }
+
+    function filterTeam() {
+      renderTeam();
+    }
+
+    function openModal(id) {
+      const m = team.find(item => item.id === id);
+      if (!m) return;
+
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div class="modal-header">
+          <img class="modal-avatar" src="${m.photo}" alt="${m.name}">
+          <div>
+            <h2>${m.name}</h2>
+            <p style="color: var(--primary); font-weight: 500;">${m.role}</p>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>Education</h4>
+          <p>${m.education}</p>
+        </div>
+        <div class="modal-section">
+          <h4>Experience Highlights</h4>
+          <ul>
+            ${m.experience.map(e => `<li>${e}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h4>Key Skills & Languages</h4>
+          <p>${m.skills.join(' • ')}</p>
+        </div>
+        <div class="modal-section contact-info">
+          <h4>Contact</h4>
+          <p>Email: <a href="mailto:${m.contact}">${m.contact}</a></p>
+        </div>
+      `;
+
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal(e) {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    // Initial load
+    renderTeam();
+  </script>
+</body>
+</html>
